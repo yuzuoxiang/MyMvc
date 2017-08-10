@@ -51,7 +51,7 @@ namespace MyMvc.测试
                 .Throws<System.ArgumentOutOfRangeException>();
             mock.Setup(m => m.ApplyDiscount(It.Is<decimal>(v => v > 100)))
                 .Returns<decimal>(total => total * 0.9m);
-            mock.Setup(m => m.ApplyDiscount(It.IsInRange<decimal>(10, 100, Range.Inclusive)))
+            mock.Setup(m => m.ApplyDiscount(It.Is<decimal>(v => v >= 10 && v <= 100)))
                 .Returns<decimal>(total => total - 5);
 
             var target = new LinqValueCalculator(mock.Object);
@@ -63,10 +63,11 @@ namespace MyMvc.测试
             decimal FiveHundredDollarDiscount = target.ValueProducts(createProduct(500));
             //断言
             Assert.AreEqual(5, FiveDollarDiscount, "$5 Fail");
-            Assert.AreEqual(10, FiveDollarDiscount, "$10 Fail");
-            Assert.AreEqual(45, FiveDollarDiscount, "$50 Fail");
-            Assert.AreEqual(95, FiveDollarDiscount, "$100 Fail");
-            Assert.AreEqual(450, FiveDollarDiscount, "$500 Fail");
+            Assert.AreEqual(5, TenDollarDiscount, "$10 Fail");
+            Assert.AreEqual(45, FiftyDollarDiscount, "$50 Fail");
+            Assert.AreEqual(95, HundredDollarDiscount, "$100 Fail");
+            Assert.AreEqual(450, FiveHundredDollarDiscount, "$500 Fail");
+            target.ValueProducts(createProduct(0));
         }
     }
 }
