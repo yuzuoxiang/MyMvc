@@ -19,7 +19,7 @@ namespace MyMvc.Controllers
             new Product{ Name="eee",Category="aasdddd",Price=66M},
         };
 
-        public HomeController(IValueCalculator calcParam)
+        public HomeController(IValueCalculator calcParam,IValueCalculator calc2)
         {
             calc = calcParam;
         }

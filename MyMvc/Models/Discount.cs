@@ -12,9 +12,15 @@ namespace MyMvc.Models
 
     public class DefaultDiscountHelper : IDiscountHelper
     {
+        public decimal discountSize { get; set; }
+        public DefaultDiscountHelper(decimal discountParam)
+        {
+            discountSize = discountParam;
+        }
+
         public decimal ApplyDiscount(decimal totalParam)
         {
-            return (totalParam - (10m / 100m * totalParam));
+            return (totalParam - (discountSize / 100m * totalParam));
         }
     }
 }
