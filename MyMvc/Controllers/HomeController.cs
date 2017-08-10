@@ -27,13 +27,6 @@ namespace MyMvc.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            //创建Ninject内核
-            IKernel ninjectKernel = new StandardKernel();
-            //配置Ninject内核
-            ninjectKernel.Bind<IValueCalculator>().To<LinqValueCalculator>();
-            //使用Ninject来创建一个对象
-            IValueCalculator calc = ninjectKernel.Get<IValueCalculator>();
-
             ShopingCart cart = new ShopingCart(calc) { Products = products };
             decimal totalValue = cart.CalculateProductTotal();
             return View(totalValue);
